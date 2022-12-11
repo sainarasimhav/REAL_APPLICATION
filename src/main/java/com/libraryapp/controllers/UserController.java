@@ -50,6 +50,8 @@ public class UserController {
 	ListInStringConverter listConverter;
 	
 	private int maximumWeeksToExtend = 3;
+
+
 	
 	@GetMapping
 	public String userHome(Model model) {

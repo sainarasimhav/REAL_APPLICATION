@@ -17,8 +17,8 @@ public class RoomService {
         return (List<Rooms>) rmRepo.findAll();
     }
 
-    public List<BookedRoomsDto> getBookedRoomsInnerJoin(Date booked_date) {
-        List<BookedRoomsDto> bookedRoomsDtos = rmRepo.fetchBookedRoomsDataInnerJoin(booked_date);
+    public List<BookedRoomsDto> getBookedRoomsInnerJoin(Date selectedDate) {//Date booked_date
+        List<BookedRoomsDto> bookedRoomsDtos = rmRepo.fetchBookedRoomsDataInnerJoin(selectedDate);//booked_date
         bookedRoomsDtos.forEach(l -> System.out.println(l));
         return bookedRoomsDtos;
     }

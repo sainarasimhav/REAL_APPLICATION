@@ -14,6 +14,6 @@ import java.util.Date;
 @Repository
 public interface RoomRepository extends CrudRepository<Rooms, Long> {
     @Query("SELECT new com.libraryapp.dto.BookedRoomsDto(r.room_id, r.capacity, b.slot_id) "
-            + "FROM Rooms r INNER JOIN r.book b")
-    List<BookedRoomsDto> fetchBookedRoomsDataInnerJoin(Date booked_date);
+            + "FROM Rooms r INNER JOIN r.book b WHERE b.booking_date = ?1")
+    List<BookedRoomsDto> fetchBookedRoomsDataInnerJoin(Date selectedDate);//Date booked_date
 }
