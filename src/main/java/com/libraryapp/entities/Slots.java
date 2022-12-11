@@ -3,6 +3,7 @@ package com.libraryapp.entities;
 import java.time.LocalDate;
 import java.util.Date;
 import java.util.List;
+import java.util.Set;
 import javax.persistence.*;
 
 @Entity()
@@ -17,16 +18,24 @@ public class Slots {
     @Column(name = "slot_range")
     private String slot_range;
 
-    @OneToMany(mappedBy = "reservedBySlots")
-    private List<Bookings> reservedByBookings;
+    public Set<Bookings> getBook() {
+        return book;
+    }
+
+    public void setBook(Set<Bookings> book) {
+        this.book = book;
+    }
+
+    @OneToMany(targetEntity = Bookings.class, mappedBy = "slot", orphanRemoval = false, fetch = FetchType.LAZY)
+    private Set<Bookings> book;
 
     public Slots(){}
 
 
-    public Slots(long slot_id, String slot_range, List<Bookings> reservedByBookings) {
+    public Slots(long slot_id, String slot_range) {
         this.slot_id = slot_id;
         this.slot_range = slot_range;
-        this.reservedByBookings = reservedByBookings;
+//        this.reservedByBookings = reservedByBookings;
     }
 
     public long getSlot_id() {
@@ -45,11 +54,11 @@ public class Slots {
         this.slot_range = slot_range;
     }
 
-    public List<Bookings> getReservedByBookings() {
-        return reservedByBookings;
-    }
-
-    public void setReservedByBookings(List<Bookings> reservedByBookings) {
-        this.reservedByBookings = reservedByBookings;
-    }
+//    public List<Bookings> getReservedByBookings() {
+//        return reservedByBookings;
+//    }
+//
+//    public void setReservedByBookings(List<Bookings> reservedByBookings) {
+//        this.reservedByBookings = reservedByBookings;
+//    }
 }

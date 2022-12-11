@@ -2,14 +2,9 @@ package com.libraryapp.entities;
 
 
 import java.util.List;
+import java.util.Set;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-import javax.persistence.OneToMany;
-import javax.persistence.Table;
+import javax.persistence.*;
 
 @Entity
 @Table(name="USERS")
@@ -44,6 +39,17 @@ public class User {
 	public User() {
 		
 	}
+
+	public Set<Bookings> getBook() {
+		return book;
+	}
+
+	public void setBook(Set<Bookings> book) {
+		this.book = book;
+	}
+
+	@OneToMany(targetEntity = Bookings.class, mappedBy = "user", orphanRemoval = false, fetch = FetchType.LAZY)
+	private Set<Bookings> book;
 	
 	public User(String userName, String password, String email, String firstName,
 			String lastName, String address, String phoneNumber, String city) {

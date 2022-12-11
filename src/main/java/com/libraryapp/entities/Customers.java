@@ -4,6 +4,7 @@ package com.libraryapp.entities;
 import java.time.LocalDate;
 import java.util.Date;
 import java.util.List;
+import java.util.Set;
 import javax.persistence.*;
 
 @Entity()
@@ -44,13 +45,23 @@ public class Customers {
 //    @OneToMany(mappedBy = "reservedByCustomers")
 //    private List<CustomersEvents> reservedByCustomerEvents;
 
-    @OneToMany(mappedBy = "reservedByCustomers")
-    private List<Bookings> reservedByBookings;
+//    @OneToMany(mappedBy = "reservedByCustomers")
+//    private List<Bookings> reservedByBookings;
 
+    public Set<Bookings> getBook() {
+        return book;
+    }
+
+    public void setBook(Set<Bookings> book) {
+        this.book = book;
+    }
+
+    @OneToMany(targetEntity = Bookings.class, mappedBy = "customer", orphanRemoval = false, fetch = FetchType.LAZY)
+    private Set<Bookings> book;
 
     public Customers(){}
 
-    public Customers(long customer_id, String first_name, String last_name, long phone_number, String email_address, String ident_type, String ident_number, String address_first_line, String address_sec_line, String city, String state, String zipcode,  List<Bookings> reservedByBookings) {
+    public Customers(long customer_id, String first_name, String last_name, long phone_number, String email_address, String ident_type, String ident_number, String address_first_line, String address_sec_line, String city, String state, String zipcode) {
         this.customer_id = customer_id;
         this.first_name = first_name;
         this.last_name = last_name;
@@ -65,7 +76,7 @@ public class Customers {
         this.zipcode = zipcode;
 //        this.reservedByRents = reservedByRents;
 //        this.reservedByCustomerEvents = reservedByCustomerEvents;
-        this.reservedByBookings = reservedByBookings;
+//        this.reservedByBookings = reservedByBookings;
     }
 
     public long getCustomer_id() {
@@ -180,11 +191,11 @@ public class Customers {
 //        this.reservedByCustomerEvents = reservedByCustomerEvents;
 //    }
 
-    public List<Bookings> getReservedByBookings() {
-        return reservedByBookings;
-    }
-
-    public void setReservedByBookings(List<Bookings> reservedByBookings) {
-        this.reservedByBookings = reservedByBookings;
-    }
+//    public List<Bookings> getReservedByBookings() {
+//        return reservedByBookings;
+//    }
+//
+//    public void setReservedByBookings(List<Bookings> reservedByBookings) {
+//        this.reservedByBookings = reservedByBookings;
+//    }
 }

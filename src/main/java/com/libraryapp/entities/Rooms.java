@@ -13,12 +13,20 @@ import javax.persistence.*;
 public class Rooms implements Serializable {
     private static final long serialVersionUID = 1L;
     @Id
-    @GeneratedValue(strategy=GenerationType.AUTO)
+    //@GeneratedValue(strategy=GenerationType.AUTO)
     private int room_id;
 
     private int capacity;
 
-//    @OneToMany(mappedBy = "room")
+    public Set<Bookings> getBook() {
+        return book;
+    }
+
+    public void setBook(Set<Bookings> book) {
+        this.book = book;
+    }
+
+    //    @OneToMany(mappedBy = "room")
 //    private List<Bookings> reservedByBookings;
     @OneToMany(targetEntity = Bookings.class, mappedBy = "room", orphanRemoval = false, fetch = FetchType.LAZY)
     private Set<Bookings> book;

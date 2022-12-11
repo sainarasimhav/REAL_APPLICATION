@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Register Event</title>
+</head>
+<body>
+<ul th:replace="page-layout :: userNavBar"></ul>
+
+<div class="container">
+    <section class="container1">
+        <form th:action="@{/event/showevents}" method="GET">
+            <div class="col-25">
+                <label for="showevents">Event Name</label>
+            </div>
+            <div class="col-75">
+                <input type="text"  id="showevents" th:value="${eventname}"  name="eventname">
+            </div>
+            <div>
+                <input type="submit" value="Search">
+            </div>
+
+            <div >
+                <table id="tablestyle">
+                    <tr>
+                        <th>Event Title</th>
+                        <th>Event Description</th>
+                        <th>Start Date</th>
+                        <th>End Date</th>
+                        <th>Action</th>
+                    </tr>
+
+                    <tr th:each="e:${evnets}" >
+                        <td th:text="${e.title}"></td>
+                        <td th:text="${e.description}"></td>
+                        <td th:text="${e.start_date}"></td>
+                        <td th:text="${e.end_date}"></td>
+                        <td th:if="${e.event_type=='S'}">
+                            <input type="submit" value="Sponsor" th:id="${registeredEvents.user_id+e.event_id}">
+                        </td>
+                        <td th:if="${e.event_type=='E'}">
+                            <input type="submit" value="Regsiter" th:id="${registeredEvents.user_id+e.event_id}">
+                        </td>
+                    </tr>
+                </table>
+            </div>
+
+        </form>
+    </section>
+</div>
+
+
+<script input th:inline="javascript">
+
+    var regEvents=[[${registeredEvents}]];
+    Object.entries(regEvents).forEach(val=> {
+
+
+        const [key, value] = val;
+        var vals = value.valueOf(0).event_id + value.valueOf(0).user_id;
+        document.getElementById(vals).disabled = true;
+    });
+
+</script>
+
+
+</body>
+</html>

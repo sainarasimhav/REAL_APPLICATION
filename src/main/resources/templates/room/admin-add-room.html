@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+  <meta charset="ISO-8859-1">
+  <title>Add Study Room</title>
+
+  <link rel="stylesheet" type="text/css" th:href="@{/CSS/account-layout.css}">
+</head>
+<body>
+<ul th:replace="page-layout :: employeeNavBar"></ul>
+<div class="container">
+  <h3>Add New Study Room</h3>
+
+  <form th:action="@{/room/newroom}" method="GET">
+    <div class="row">
+      <div class="col-50">
+        <label for="roomid">Room ID</label>
+      </div>
+
+      <div class="col-75">
+        <input type="number" id="roomid" name="roomid" th:value="${room_id}" required="required">
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-50">
+        <label for="capacity">Room Capacity</label>
+      </div>
+      <div class="col-75">
+        <input type="number" id="capacity" name="capacity" th:value="${capacity}" required="required">
+      </div>
+
+      <div>
+        <input type="submit" value="Add" style=" position: absolute; margin-left: 10px" id="book">
+      </div>
+    </div>
+  </form>
+</div>
+
+</body>
+</html>

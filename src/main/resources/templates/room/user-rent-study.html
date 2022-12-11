@@ -11,97 +11,36 @@
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.5.3/dist/js/bootstrap.bundle.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.9.0/js/bootstrap-datepicker.min.js"></script>
     <link rel="stylesheet" type="text/css" th:href="@{/CSS/account-layout.css}">
+
+
+
+
+
 </head>
 <body>
-<style>
-    /* Create a custom checkbox */
-    .container12 {
-        display: block;
-        position: relative;
-        padding-left: 35px;
-        margin-bottom: 12px;
-        cursor: pointer;
-        font-size: 22px;
-        -webkit-user-select: none;
-        -moz-user-select: none;
-        -ms-user-select: none;
-        user-select: none;
-    }
 
-    /* Hide the browser's default checkbox */
-    .container12 input {
-        position: absolute;
-        opacity: 0;
-        cursor: pointer;
-        height: 0;
-        width: 0;
-    }
 
-    /* Create a custom checkbox */
-    .checkmark {
-        position: absolute;
-        /*top: 0;*/
-        /*left: 0;*/
-        height: 25px;
-        width: 25px;
-        background-color: green;
-    }
-
-    /* On mouse-over, add a grey background color */
-    /*.container12:hover input ~ .checkmark {*/
-    /*    background-color: #ccc;*/
-    /*}*/
-
-    /* When the checkbox is checked, add a blue background */
-    .container12 input:checked ~ .checkmark {
-        background-color: yellow;
-    }
-
-    /* Create the checkmark/indicator (hidden when not checked) */
-    .checkmark:after {
-        content: "";
-        position: absolute;
-        display: none;
-    }
-
-    /* Show the checkmark when checked */
-    .container12 input:checked ~ .checkmark:after {
-        display: block;
-    }
-
-    /* Style the checkmark/indicator */
-    .container12 .checkmark:after {
-        left: 9px;
-        top: 5px;
-        width: 5px;
-        height: 10px;
-        border: solid white;
-        border-width: 0 3px 3px 0;
-        -webkit-transform: rotate(45deg);
-        -ms-transform: rotate(45deg);
-        transform: rotate(45deg);
-
-    }
-</style>
 
 <ul th:replace="page-layout :: userNavBar"></ul>
-    <div class="container">
-        <section class="container1">
-            <form th:action="@{/room/fetchbookedrooms}" method="GET">
-                <div class="col-25">
-                    <label for="date">Select Date</label>
-                </div>
-                <div class="col-75">
-                    <input type="date" id="date" name="date">
-                </div>
-                <div>
-                    <input type="submit" value="Search">
-                </div>
-            </form>
-        </section>
+<div class="container">
+    <section class="container1">
+        <form th:action="@{/room/fetchbookedrooms}" method="GET">
+            <div class="col-25">
+                <label for="selectedDate">Select Date</label>
+            </div>
+            <div class="col-75">
+                <input type="date"  id="selectedDate" th:value="${selectedDate}"  name="selectedDate">
+                <!--                <input type="hidden" th:value="${selectedDate}" th:name="dateSelected">-->
+            </div>
+            <div>
+                <input type="submit" value="Search">
+            </div>
+        </form>
+    </section>
 
 
-
+    <!--    <p th:if="${bookedRooms.size() == 0}">You don't have any available rooms.</p>-->
+    <div >
         <table id="tablestyle">
             <tr>
                 <th>Room Name</th>
@@ -110,62 +49,111 @@
                 <th>11AM-1PM</th>
                 <th>1PM-3PM</th>
                 <th>4PM-6PM</th>
-                <th>Book</th>
             </tr>
             <td></td>
+
+
             <td></td>
             <td></td>
             <td></td>
             <td></td>
-            <td>
-                <label class="container12">
-                    <input type="checkbox" checked="checked" style="background-color: red; cursor: not-allowed" >
-                    <span class="checkmark"></span>
-                </label>
-            </td>
-            <td>
-                <input class="table" style="width: 250px" type="submit" value="Book" >
 
-            </td>
+            <form th:action="@{/booking/selectedRooms}" method="GET">
+                <input type="hidden" th:value="${selectedDate}" th:name="date">
 
-            <tr th:each="room:${listedRooms}">
-                <td th:text="${room.key.id}"></td>
-                <td th:text="${room.key.capacity}"></td>
-                <td th:text="${room.key.slot1}">
-                    <label class="container12">
-                        <input type="checkbox" checked="checked">
-                        <span class="checkmark"></span>
-                    </label>
-                    <label class="container12" th:if="${room.key.slot1=='Booked'}">
-                        <input type="checkbox" checked="checked" style="background-color: red; cursor: not-allowed">
-                        <span class="checkmark"></span>
-                    </label>
+                <tr th:each="r:${rooms}" th:id="${r.room_id}">
+                    <td>
+                        <label class="col-25" for="room_id" th:text="${r.room_id}">
+                            <input type="radio" name="room_id" id="room_id" th:value="${r.room_id}">
+                            <!--                        <input type="hidden" th:value="${r.room_id}" th:name="room_no">-->
+                        </label>
+                    </td>
 
-                </td>
-
-                <td th:if="${room.key.slot2!='Booked'}">
-                    <label class="container12">
-                        <input type="checkbox" checked="checked">
-                        <span class="checkmark"></span>
-                    </label>
-                </td>
-                <td th:text="${room.key.slot3!='Booked'}">
-                    <label class="container12">
-                        <input type="checkbox" checked="checked">
-                        <span class="checkmark"></span>
-                    </label>
-                </td>
-                <td th:text="${room.key.slot4!='Booked'}">
-                    <label class="container12">
-                        <input type="checkbox" checked="checked">
-                        <span class="checkmark"></span>
-                    </label>
-                </td>
+                    <td th:text="${r.capacity}"></td>
+                    <td>
+                        <label class="col-25">
+                            <input type="radio" name="check" value="30" th:id="${r.room_id*100 +30}">
+                            <!--                         <input type="hidden" th:value="${r.room_id}" th:name="room_no">-->
+                        </label>
+                    </td>
+                    <td >
+                        <label class="col-25">
+                            <input type="radio" name="check" value="31" th:id="${r.room_id*100 +31}">
+                        </label>
+                    </td>
+                    <td >
+                        <label class="col-25">
+                            <input type="radio" name="check" value="32" th:id="${r.room_id*100 +32}">
+                        </label>
+                    </td>
+                    <td >
+                        <label class="col-25">
+                            <input type="radio" name="check" value="33" th:id="${r.room_id*100 +33}">
+                        </label>
+                    </td>
+                </tr>
+                <input type="hidden" name="roomId" id="roomId" value="">
 
 
-            </tr>
+                <div>
+                    <input type="submit" value="Book" style=" position: absolute; margin-left: 10px" id="book">
+                    <!--                    <input type="hidden" th:value="${r.room_id}" th:name="room_no">-->
+                </div>
+            </form>
+
         </table>
     </div>
+</div>
+
+
+<script input th:inline="javascript">
+
+    var bookedRooms=[[${bookedRooms}]];
+    // console.log(bookedRooms);
+    //
+    // function getRooms(){
+    //     let bookedRooms=;
+    //     console.log(bookedRooms);}
+    //     getRooms();
+
+    // var table=document.getElementById("tablestyle");
+    //
+    // bookedRooms.forEach((room)=>{
+    //     console.log(room);
+    // })
+    // console.log("here"+bookedRooms);
+    Object.entries(bookedRooms).forEach(val=>{
+
+
+        const [key,value]=val;
+        var vals=value.valueOf(0).room_id*100+value.valueOf(0).slot_id;
+        document.getElementById(vals).disabled=true;
+
+        let btn=document.getElementById("book")
+
+        btn.addEventListener('click',event=>{
+            getRadios();
+        });
+
+        function getRadios(){
+            var input=document.getElementsByTagName("input");
+            for(var i=0;i<input.length;i++){
+                if(input[i].type=='radio' && input[i].checked) {
+                    var a = parseInt(input[i].id/100);
+                }
+
+            }
+            document.getElementById("roomId").value=a;}
+
+
+    })
+
+    // for(var bookedRoom:bookedRooms){
+    //
+    // }
+
+
+</script>
 
 
 </body>

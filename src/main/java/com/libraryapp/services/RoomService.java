@@ -2,6 +2,7 @@ package com.libraryapp.services;
 
 import com.libraryapp.DAO.RoomRepository;
 import com.libraryapp.dto.BookedRoomsDto;
+import com.libraryapp.entities.Bookings;
 import com.libraryapp.entities.Rooms;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -24,4 +25,7 @@ public class RoomService {
         return bookedRoomsDtos;
     }
 
+    public void save(Rooms room) {
+        rmRepo.save(room);
+    }
 }
