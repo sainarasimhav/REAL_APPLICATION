@@ -6,6 +6,7 @@ import com.libraryapp.entities.Bookings;
 import com.libraryapp.entities.User;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.CrudRepository;
+import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 import java.util.List;
 
@@ -13,7 +14,6 @@ import java.util.Date;
 
 @Repository
 public interface RoomRepository extends CrudRepository<Rooms, Long> {
-    @Query("SELECT new com.libraryapp.dto.BookedRoomsDto(r.room_id, r.capacity, b.slot_id) "
-            + "FROM Rooms r INNER JOIN r.book b WHERE b.booking_date = ?1")
-    List<BookedRoomsDto> fetchBookedRoomsDataInnerJoin(Date selectedDate);//Date booked_date
+    @Query("SELECT new com.libraryapp.dto.BookedRoomsDto(r.room_id, r.capacity, b.slot_id) FROM Rooms r INNER JOIN r.book b WHERE b.booking_date = cast(:selectedDateTime AS timestamp )")
+    List<BookedRoomsDto> fetchBookedRoomsDataInnerJoin(@Param("selectedDateTime") Date selectedDateTime);
 }

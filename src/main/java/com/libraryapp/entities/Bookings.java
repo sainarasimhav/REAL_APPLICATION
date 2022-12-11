@@ -26,6 +26,7 @@ public class Bookings implements Serializable {
 
 //    private int room_id;
 
+    @Temporal(TemporalType.TIMESTAMP)
     private Date booking_date;
 
     @ManyToOne(cascade = {CascadeType.DETACH, CascadeType.MERGE, CascadeType.PERSIST, CascadeType.REFRESH},

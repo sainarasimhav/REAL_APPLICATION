@@ -20,6 +20,7 @@ public class RoomService {
     public List<BookedRoomsDto> getBookedRoomsInnerJoin(Date selectedDate) {//Date booked_date
         List<BookedRoomsDto> bookedRoomsDtos = rmRepo.fetchBookedRoomsDataInnerJoin(selectedDate);//booked_date
         bookedRoomsDtos.forEach(l -> System.out.println(l));
+        System.out.println(selectedDate);
         return bookedRoomsDtos;
     }
 

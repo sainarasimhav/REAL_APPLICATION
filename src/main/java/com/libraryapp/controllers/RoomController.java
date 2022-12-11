@@ -6,6 +6,7 @@ import com.libraryapp.entities.Rooms;
 import com.libraryapp.entities.User;
 import com.libraryapp.services.RoomService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
@@ -38,11 +39,12 @@ public class RoomController {
 //public List<BookedRoomsDto> getBookedRoomsInnerJoin(@PathVariable(value="booked_date") Date booked_date) {
     @GetMapping("/fetchbookedrooms")
     @ResponseBody
-    public List<BookedRoomsDto> getBookedRoomsInnerJoin(@RequestParam String date) throws ParseException { //@PathVariable(value="booked_date") Date booked_date
+    public List<BookedRoomsDto> getBookedRoomsInnerJoin(@RequestParam("date") @DateTimeFormat(pattern="yyyy-MM-dd") Date date) throws ParseException { //@PathVariable(value="booked_date") Date booked_date
 //        return new ResponseEntity<List<BookedRoomsDto>>(roomService.getBookedRoomsInnerJoin(), HttpStatus.OK);
-        SimpleDateFormat formatter = new SimpleDateFormat("yyyy-mm-dd", Locale.ENGLISH);
-        Date selectedDate = formatter.parse(date);
-        List<BookedRoomsDto> bookedRoomsDtos = roomService.getBookedRoomsInnerJoin(selectedDate); //booked_date
+//        SimpleDateFormat formatter = new SimpleDateFormat("yyyy-mm-dd", Locale.ENGLISH);
+//        Date selectedDate = formatter.parse(date);
+        List<BookedRoomsDto> bookedRoomsDtos = roomService.getBookedRoomsInnerJoin(date); //booked_date
+        System.out.println("Input from site: "+date);
         return bookedRoomsDtos;
 //        return "/room/room-rent-study.html";
     }
