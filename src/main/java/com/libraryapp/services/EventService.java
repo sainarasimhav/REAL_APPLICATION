@@ -21,7 +21,12 @@ public class EventService {
         return (List<Events>) evRepo.findByUserId(userId);
     }
 
-    public List<Events> findByEventNameContaining(String userName) {
-        return (List<Events>) evRepo.findByEventNameContaining(userName);
+    public List<Events> findByEventNameContaining(String eventName) {
+        return (List<Events>) evRepo.findByEventNameContaining(eventName);
     }
+
+    public void save(Events events) {
+        evRepo.save(events);
+    }
+
 }

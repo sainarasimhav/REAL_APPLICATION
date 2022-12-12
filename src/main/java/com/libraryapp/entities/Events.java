@@ -1,5 +1,7 @@
 package com.libraryapp.entities;
 
+import com.libraryapp.ids.EventsIds;
+
 import java.io.Serializable;
 import java.time.LocalDate;
 import java.util.Date;
@@ -7,13 +9,17 @@ import java.util.List;
 import javax.persistence.*;
 
 @Entity()
-@Table(name = "EVENTS")
-
+@Table(name = "EVENT")
+@IdClass(EventsIds.class)
 public class Events implements Serializable {
     private static final long serialVersionUID = 1L;
     @Id
-    @GeneratedValue(strategy=GenerationType.AUTO)
+//    @GeneratedValue(strategy=GenerationType.AUTO)
     private long event_id;
+
+    @Id
+    @Column(name = "user_id")
+    private long userId;
 
     public String getEventName() {
         return eventName;
@@ -50,8 +56,7 @@ public class Events implements Serializable {
         this.userId = userId;
     }
 
-    @Column(name = "user_id")
-    private long userId;
+
 
 //    @OneToMany(mappedBy = "reservedByEvents")
 //    private List<EventsTopics> reservedByEventsTopics;

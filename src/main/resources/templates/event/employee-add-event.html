@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="ISO-8859-1">
+    <title>Add Study Room</title>
+
+    <link rel="stylesheet" type="text/css" th:href="@{/CSS/account-layout.css}">
+</head>
+<body>
+<ul th:replace="page-layout :: employeeNavBar"></ul>
+<div class="container">
+    <h3>Add New Event</h3>
+
+
+    <form th:action="@{/event/saveevent}" method="GET">
+        <div class="row">
+            <div class="col-50">
+                <label for="eventId">Event ID</label>
+            </div>
+
+            <div class="col-75">
+                <input type="number" id="eventId" name="eventId" th:value="${eventId}" required="required">
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-50">
+                <label for="eventName">Event Name</label>
+            </div>
+            <div class="col-75">
+                <input type="text" id="eventName" name="eventName" th:value="${eventName}" required="required">
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-50">
+                <label for="description">Description</label>
+            </div>
+
+            <div class="col-75">
+                <input type="text" id="description" name="description" th:value="${description}" required="required">
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-50">
+                <label for="start_date">Start Date</label>
+            </div>
+
+            <div class="col-75">
+                <input type="date" id="start_date" name="start_date" th:value="${start_date}" required="required">
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-50">
+                <label for="end_date">Start Date</label>
+            </div>
+
+            <div class="col-75">
+                <input type="date" id="end_date" name="end_date" th:value="${end_date}" required="required">
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-50">
+
+                <label for="event_type">Event Type</label>
+
+            </div>
+
+            <div class="col-75">
+                <input type="text" id="event_type" name="event_type" th:value="${event_type}" required="required" placeholder="E:Exhibition S:Seminar">
+            </div>
+        </div>
+        <div>
+            <input type="submit" value="Add" id="add" style="margin-left: 15em; position: absolute; top: 13%;">
+        </div>
+
+
+    </form>
+</div>
+
+</body>
+</html>

@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Your Events</title>
+  <link rel="stylesheet" type="text/css" th:href="@{/CSS/account-layout.css}">
+</head>
+<body>
+<ul th:replace="page-layout :: userNavBar"></ul>
+
+<div class="container">
+
+  <h3>Your Events</h3>
+
+  <p th:if="${eventsByUserId.size() == 0}">You don't have any registered Events.</p>
+      <table th:if="${eventsByUserId.size() > 0}" id="tablestyle">
+
+        <tr>
+          <th>Title</th>
+          <th>Description</th>
+          <th>Start Date</th>
+          <th>End Date</th>
+          <th>Event Type</th>
+        </tr>
+        <tr th:each="e : ${eventsByUserId}">
+          <td th:text="${e.eventName}"></td>
+          <td th:text="${e.description}"></td>
+          <td th:text="${e.start_date}"></td>
+          <td th:text="${e.end_date}"></td>
+          <td th:if="${e.event_type=='S'}" th:text="Seminar">
+
+          </td>
+          <td th:if="${e.event_type=='E'}" th:text="Exhibition">
+
+          </td>
+        </tr>
+
+      </table>
+</div>
+
+</body>
+</html>

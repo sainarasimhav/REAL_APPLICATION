@@ -31,16 +31,39 @@
                         <th>Action</th>
                     </tr>
 
-                    <tr th:each="e:${evnets}" >
-                        <td th:text="${e.title}"></td>
+                    <tr th:each="e:${events}">
+
+                        <td th:text="${e.eventName}"></td>
+
                         <td th:text="${e.description}"></td>
+                        <input type="hidden" value="" name="event_id" id="description">
                         <td th:text="${e.start_date}"></td>
+                        <input type="hidden" value="" name="event_id" id="start_date">
                         <td th:text="${e.end_date}"></td>
+                        <input type="hidden" value="" name="event_id" id="end_date">
+                        <input type="hidden" value="" name="event_id" id="event_type">
+
                         <td th:if="${e.event_type=='S'}">
-                            <input type="submit" value="Sponsor" th:id="${registeredEvents.user_id+e.event_id}">
+                            <form th:action="@{/event/registerevents}" method="GET">
+                                <input type="hidden" name="eventId" th:value="${e.event_id}">
+                                <input type="hidden" th:value="${e.eventName}" name="eventName" >
+                                <input type="hidden" th:value="${e.description}" name="description" >
+                                <input type="hidden" th:value="${e.start_date}" name="start_date" >
+                                <input type="hidden" th:value="${e.end_date}" name="end_date">
+                                <input type="hidden" th:value="${e.event_type}" name="event_type" >
+                                <input type="submit" value="Sponsor" name="sponsor" th:id="${e.event_id}" class="btn">
+                            </form>
                         </td>
                         <td th:if="${e.event_type=='E'}">
-                            <input type="submit" value="Regsiter" th:id="${registeredEvents.user_id+e.event_id}">
+                            <form th:action="@{/event/registerevents}" method="GET">
+                                <input type="hidden" name="eventId" th:value="${e.event_id}">
+                                <input type="hidden" th:value="${e.eventName}" name="eventName" >
+                                <input type="hidden" th:value="${e.description}" name="description" >
+                                <input type="hidden" th:value="${e.start_date}" name="start_date" >
+                                <input type="hidden" th:value="${e.end_date}" name="end_date">
+                                <input type="hidden" th:value="${e.event_type}" name="event_type" >
+                                <input type="submit" value="Regsiter" name="register" th:id="${e.event_id}" class="btn">
+                            </form>
                         </td>
                     </tr>
                 </table>
@@ -53,14 +76,39 @@
 
 <script input th:inline="javascript">
 
-    var regEvents=[[${registeredEvents}]];
-    Object.entries(regEvents).forEach(val=> {
+    var regEvents=[[${eventsByUserId}]];
+    // console.log(regEvents);
 
+    Object.entries(regEvents).forEach(value => {
 
-        const [key, value] = val;
-        var vals = value.valueOf(0).event_id + value.valueOf(0).user_id;
-        document.getElementById(vals).disabled = true;
-    });
+        const [key,val]=value;
+
+        // console.log(val);
+
+        var a=val.valueOf(0).event_id;
+        // console.log("here"+a);
+        // var a=val.room_id+val.userId
+        //
+
+        if(document.getElementById(a)!=null){
+            document.getElementById(a).disabled=true;
+            document.getElementById(a).style.background="silver";
+            document.getElementById(a).style.cursor="not-allowed";
+
+        }
+        // console.log(value)
+        // var btn=document.getElementsByClassName("btn");
+        //
+        // console.log(btn);
+
+        // btn.addEventListener('click',event=>{
+        //     setDetails();
+        // });
+        // getDetails(){
+        //
+        // }
+
+    })
 
 </script>
 
