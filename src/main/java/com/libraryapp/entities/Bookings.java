@@ -51,14 +51,23 @@ public class Bookings implements Serializable {
     private int room_id;
 
     public long getUser_id() {
-        return user_id;
+        return userId;
     }
 
     public void setUser_id(long user_id) {
-        this.user_id = user_id;
+        this.userId = user_id;
     }
 
-    private long user_id;
+    public long getUserId() {
+        return userId;
+    }
+
+    public void setUserId(long userId) {
+        this.userId = userId;
+    }
+
+    @Column(name = "user_id")
+    private long userId;
 
     @Temporal(TemporalType.TIMESTAMP)
     private Date booking_date;
@@ -146,13 +155,13 @@ public class Bookings implements Serializable {
 
     public Bookings(){}
 
-    public Bookings(int booking_id, int room_id, int customer_id, int slot_id,   Date booking_date, long user_id) { //int room_id, int customer_id, int slot_id,
+    public Bookings(int booking_id, int room_id, int customer_id, int slot_id,   Date booking_date, long userId) { //int room_id, int customer_id, int slot_id,
         this.booking_id = booking_id;
         this.customer_id = customer_id;
         this.slot_id = slot_id;
         this.room_id = room_id;
         this.booking_date = booking_date;
-        this.user_id = user_id;
+        this.userId = userId;
     }
 
 

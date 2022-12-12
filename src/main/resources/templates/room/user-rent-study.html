@@ -60,7 +60,7 @@
 
             <form th:action="@{/booking/selectedRooms}" method="GET">
                 <input type="hidden" th:value="${selectedDate}" th:name="date">
-
+                <input type="hidden" name="roomId" id="roomId" value="">
                 <tr th:each="r:${rooms}" th:id="${r.room_id}">
                     <td>
                         <label class="col-25" for="room_id" th:text="${r.room_id}">
@@ -72,27 +72,26 @@
                     <td th:text="${r.capacity}"></td>
                     <td>
                         <label class="col-25">
-                            <input type="radio" name="check" value="30" th:id="${r.room_id*100 +30}">
+                            <input type="radio" name="check" value="30" th:id="${r.room_id*100 +30}" onclick="setId(this.id)">
                             <!--                         <input type="hidden" th:value="${r.room_id}" th:name="room_no">-->
                         </label>
                     </td>
                     <td >
                         <label class="col-25">
-                            <input type="radio" name="check" value="31" th:id="${r.room_id*100 +31}">
+                            <input type="radio" name="check" value="31" th:id="${r.room_id*100 +31}" onclick="setId(this.id)">
                         </label>
                     </td>
                     <td >
                         <label class="col-25">
-                            <input type="radio" name="check" value="32" th:id="${r.room_id*100 +32}">
+                            <input type="radio" name="check" value="32" th:id="${r.room_id*100 +32}" onclick="setId(this.id)">
                         </label>
                     </td>
                     <td >
                         <label class="col-25">
-                            <input type="radio" name="check" value="33" th:id="${r.room_id*100 +33}">
+                            <input type="radio" name="check" value="33" th:id="${r.room_id*100 +33}" onclick="setId(this.id)">
                         </label>
                     </td>
                 </tr>
-                <input type="hidden" name="roomId" id="roomId" value="">
 
 
                 <div>
@@ -109,6 +108,10 @@
 <script input th:inline="javascript">
 
     var bookedRooms=[[${bookedRooms}]];
+
+    console.log(bookedRooms);
+
+    // console.log(bookedRooms);
     // console.log(bookedRooms);
     //
     // function getRooms(){
@@ -122,31 +125,40 @@
     //     console.log(room);
     // })
     // console.log("here"+bookedRooms);
-    Object.entries(bookedRooms).forEach(val=>{
+    Object.entries(bookedRooms).forEach(val=> {
 
 
-        const [key,value]=val;
-        var vals=value.valueOf(0).room_id*100+value.valueOf(0).slot_id;
-        document.getElementById(vals).disabled=true;
+        const [key, value] = val;
+        // console.log(val);
+        var vals = value.valueOf(0).room_id * 100 + value.valueOf(0).slot_id;
+        document.getElementById(vals).disabled = true;
+    });
+    let btn=document.getElementById("book").id;
+    // console.log(btn);
+    // getRadios();
+    // btn.addEventListener('click',event=>{
+    //     getRadios();
+    // });
 
-        let btn=document.getElementById("book")
+    // function getRadios(){
+    //     var input=document.getElementsByTagName("input");
+    //     for(var i=0;i<input.length;i++){
+    //         if(input[i].type=='radio' && input[i].checked) {
+    //             console.log(input[i].id)
+    //             // var a = parseInt(input[i].id/100);
+    //         }
+    //
+    //     }
+    // };
+    // alert(a);
+    // document.getElementById("roomId").value=parseInt(a);}
 
-        btn.addEventListener('click',event=>{
-            getRadios();
-        });
+    function setId(id){
+        // console.log(parseInt(id/100));
+        var a=id/100;
+        document.getElementById("roomId").value=parseInt(a);
+    }
 
-        function getRadios(){
-            var input=document.getElementsByTagName("input");
-            for(var i=0;i<input.length;i++){
-                if(input[i].type=='radio' && input[i].checked) {
-                    var a = parseInt(input[i].id/100);
-                }
-
-            }
-            document.getElementById("roomId").value=a;}
-
-
-    })
 
     // for(var bookedRoom:bookedRooms){
     //

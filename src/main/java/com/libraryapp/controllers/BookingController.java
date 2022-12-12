@@ -1,6 +1,7 @@
 package com.libraryapp.controllers;
 
 import com.libraryapp.entities.Bookings;
+import com.libraryapp.entities.Events;
 import com.libraryapp.entities.Rooms;
 import com.libraryapp.entities.User;
 import com.libraryapp.security.CurrentUserFinder;
@@ -31,6 +32,15 @@ public class BookingController {
         return bookingService.findAll();
     }
 
+    @GetMapping("/yourrooms")
+    @ResponseBody
+    public List<Bookings> getBookedRooms(){
+        long currentUserId = currentUserFinder.getCurrentUserId();
+        User currentUser = usService.findById(currentUserId);
+        List<Bookings> bookings = bookingService.findByUserId(currentUser.getUserId());
+        return bookings;
+    }
+
     @GetMapping("/selectedRooms")
     @ResponseBody
     public ModelAndView saveBookings(@RequestParam(value = "date",required = false) @DateTimeFormat(pattern="yyyy-MM-dd") Date selectedDate,
@@ -47,7 +57,7 @@ public class BookingController {
         booking.setCustomer_id(101);
         ModelAndView modelAndView = new ModelAndView();
         bookingService.save(booking);
-
+        modelAndView.setViewName("room/user-rent-success.html");
         return modelAndView;
     }
 }

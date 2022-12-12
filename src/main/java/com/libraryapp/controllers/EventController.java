@@ -134,7 +134,16 @@ public class EventController {
         events.setDescription(description);
         events.setUserId(1);
         eventService.save(events);
-//        modelAndView.setViewName("event/employee-add-event.html");
+        modelAndView.setViewName("event/employee-event-success.html");
         return modelAndView;
+    }
+
+    @PutMapping(value="/payreservation")
+    public String payReservation(@RequestParam Double amountToPay,
+                                 Model model) {
+
+        model.addAttribute("amountToPay", amountToPay);
+//        model.addAttribute("reservedBookIdsInString", reservedBookIdsInString);
+        return "user/user-pay-reservation.html";
     }
 }

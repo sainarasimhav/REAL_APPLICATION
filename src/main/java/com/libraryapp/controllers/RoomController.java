@@ -97,8 +97,14 @@ public class RoomController {
         room.setCapacity(capacity);
         ModelAndView modelAndView = new ModelAndView();
         roomService.save(room);
+        modelAndView.setViewName("room/admin-room-success.html");
         return modelAndView;
     }
-
+    @GetMapping(value = "/addSuccess")
+    public ModelAndView addSuccess(){
+        ModelAndView modelAndView = new ModelAndView();
+        modelAndView.setViewName("room/admin-add-room.html");
+        return modelAndView;
+    }
 
 }
