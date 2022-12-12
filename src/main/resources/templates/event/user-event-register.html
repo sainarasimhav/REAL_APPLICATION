@@ -44,7 +44,7 @@
                         <input type="hidden" value="" name="event_id" id="event_type">
 
                         <td th:if="${e.event_type=='S'}">
-                            <form th:action="@{/event/registerevents}" method="GET">
+                            <form th:action="@{/event/payreservation}" th:method="PUT">
                                 <input type="hidden" name="eventId" th:value="${e.event_id}">
                                 <input type="hidden" th:value="${e.eventName}" name="eventName" >
                                 <input type="hidden" th:value="${e.description}" name="description" >
@@ -52,6 +52,7 @@
                                 <input type="hidden" th:value="${e.end_date}" name="end_date">
                                 <input type="hidden" th:value="${e.event_type}" name="event_type" >
                                 <input type="submit" value="Sponsor" name="sponsor" th:id="${e.event_id}" class="btn">
+                                <input type="hidden" th:value="100" th:name="amountToPay">
                             </form>
                         </td>
                         <td th:if="${e.event_type=='E'}">
@@ -77,7 +78,14 @@
 <script input th:inline="javascript">
 
     var regEvents=[[${eventsByUserId}]];
+
+    var allEvents=[[${events}]]
     // console.log(regEvents);
+    // console.log(allEvents);
+
+    let today = new Date().toISOString().slice(0, 10)
+
+    // console.log(today)
 
     Object.entries(regEvents).forEach(value => {
 
@@ -86,6 +94,10 @@
         // console.log(val);
 
         var a=val.valueOf(0).event_id;
+
+        var b=val.valueOf(0).end_date;
+
+
         // console.log("here"+a);
         // var a=val.room_id+val.userId
         //
@@ -96,6 +108,8 @@
             document.getElementById(a).style.cursor="not-allowed";
 
         }
+
+
         // console.log(value)
         // var btn=document.getElementsByClassName("btn");
         //
@@ -108,7 +122,34 @@
         //
         // }
 
-    })
+    });
+
+    Object.entries(allEvents).forEach(value => {
+
+        const [key, val] = value;
+
+        // console.log(val);
+
+        var d=val.valueOf(0).event_id
+        var a = val.valueOf(0).end_date;
+
+        var b=a.toString();
+        var c=b.slice(0,10);
+
+
+        // console.log("event date"+c);
+
+
+        // console.log("here"+a);
+        // var a=val.room_id+val.userId
+        //
+
+        if (today>c) {
+            document.getElementById(d).style.background = "silver";
+            document.getElementById(d).style.cursor = "not-allowed";
+            document.getElementById(a).disabled=true;
+        }
+    });
 
 </script>
 

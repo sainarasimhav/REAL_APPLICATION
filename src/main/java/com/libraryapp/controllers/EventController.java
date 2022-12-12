@@ -139,11 +139,30 @@ public class EventController {
     }
 
     @PutMapping(value="/payreservation")
-    public String payReservation(@RequestParam Double amountToPay,
+    public ModelAndView payReservation(@RequestParam Double amountToPay,
+                                       @RequestParam(value = "eventId") int eventId,
+                                       @RequestParam(value = "eventName",required = false) String eventName,
+                                       @RequestParam(value = "start_date",required = false) @DateTimeFormat(pattern="yyyy-MM-dd") Date start_date,
+                                       @RequestParam(value = "end_date",required = false) @DateTimeFormat(pattern="yyyy-MM-dd") Date end_date,
+                                       @RequestParam(value = "event_type", required = false) String event_type,
+                                       @RequestParam(value = "description", required = false) String description,
                                  Model model) {
 
         model.addAttribute("amountToPay", amountToPay);
 //        model.addAttribute("reservedBookIdsInString", reservedBookIdsInString);
-        return "user/user-pay-reservation.html";
+        ModelAndView modelAndView = new ModelAndView();
+        Events events = new Events();
+        events.setEvent_id(eventId);
+        events.setEventName(eventName);
+        events.setStart_date(start_date);
+        events.setEnd_date(end_date);
+        events.setEvent_type(event_type);
+        events.setDescription(description);
+        long currentUserId = currentUserFinder.getCurrentUserId();
+        User currentUser = usService.findById(currentUserId);
+        events.setUserId(currentUser.getUserId());
+        eventService.save(events);
+        modelAndView.setViewName("user/user-pay-reservation.html");
+        return modelAndView;
     }
 }

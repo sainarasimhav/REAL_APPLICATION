@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Your Rooms</title>
+  <link rel="stylesheet" type="text/css" th:href="@{/CSS/account-layout.css}">
+</head>
+<body>
+<ul th:replace="page-layout :: userNavBar"></ul>
+
+<div class="container">
+
+  <h3>Your Rooms</h3>
+<form th:action="@{/room/deleterooms}">
+
+</form>
+
+  <table id="tablestyle">
+
+    <tr>
+      <th>Booking Id</th>
+      <th>Room Id</th>
+      <th>Booking Date</th>
+      <th>Slot</th>
+    </tr>
+    <tr th:each="b : ${bookings}">
+      <td th:text="${b.booking_id}"></td>
+      <td th:text="${b.room_id}"></td>
+      <td th:text="${b.booking_date}"></td>
+      <td th:if="${b.slot_id==30}" th:text="08AM-10AM"></td>
+      <td th:if="${b.slot_id==31}" th:text="11AM-01pm"></td>
+      <td th:if="${b.slot_id==32}" th:text="01PM-03PM"></td>
+      <td th:if="${b.slot_id==33}" th:text="04PM-06PM"></td>
+    </tr>
+
+  </table>
+</div>
+
+</body>
+</html>

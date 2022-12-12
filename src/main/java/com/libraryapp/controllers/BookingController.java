@@ -28,8 +28,30 @@ public class BookingController {
     UserService usService;
 
     @GetMapping("/all")
+    @ResponseBody
     public List<Bookings> getBookings(){
         return bookingService.findAll();
+    }
+
+    @GetMapping("/allusers")
+    @ResponseBody
+    public int [] getAllUsers(Model model){
+        List<User> users = usService.findAll();
+
+        int []counts = new int[]{0,0,0};
+        for (User u:users) {
+            if(u.getRole().contains("ROLE_USER")){
+                counts[0]++;
+            }
+            if(u.getRole().contains("ROLE_ADMIN")){
+                counts[1]++;
+            }
+            if(u.getRole().contains("ROLE_EMPLOYEE")){
+                counts[2]++;
+            }
+        }
+        model.addAttribute("counts",counts);
+        return counts;
     }
 
     @GetMapping("/yourrooms")
@@ -60,4 +82,18 @@ public class BookingController {
         modelAndView.setViewName("room/user-rent-success.html");
         return modelAndView;
     }
+
+    @GetMapping("/yourbookedrooms")
+    @ResponseBody
+    public ModelAndView getBookedRooms(Model model){
+        ModelAndView modelAndView = new ModelAndView();
+        modelAndView.setViewName("room/user-room-bookings.html");
+        long currentUserId = currentUserFinder.getCurrentUserId();
+        User currentUser = usService.findById(currentUserId);
+        List<Bookings> bookings = bookingService.findByUserId(currentUser.getUserId());
+        model.addAttribute("bookings",bookings);
+        System.out.println(bookings);
+        return modelAndView;
+    }
+
 }
